@@ -1,0 +1,128 @@
+#main {
+
+    background-color: rgba(170,170,170,1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: sans-serif;
+    
+}
+#calculator {
+    width: 600px;
+    height: 900px;
+    display: flex;
+    flex-direction: column; 
+
+    justify-content: flex-start;
+    align-items: center;
+    
+    background-color: rgba(240,240,240,1);
+    margin: 100px 0 100px 0;
+
+    border-radius: 0 0 50px 50px;
+
+    box-shadow: 0 10px 0 rgba(125,125,125,1);
+}
+
+#display-border-outer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 450px;
+    height: 160px;
+    background-color: rgba(200,200,200,1);
+    margin: 100px 0px 100px 0px;
+}
+
+#display-border-inner{
+    width: 400px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(135,135,135,1);
+}
+#main-display {
+    width: 350px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: rgb(180,180,170,1);
+    color: rgba(25,25,25,1);
+    font-size: 45px;
+    letter-spacing: 5px;
+    padding: 0 10px 0 0;
+    border-radius: 15px;
+}
+
+#number-display {
+    width: 300px;
+    height: 35px;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: rgb(180,180,170,1);
+    color: rgba(25,25,25,1);
+    font-size: 45px;
+    letter-spacing: 5px;
+    padding: 0 10px 0 0;
+
+}
+#operation-display {
+    width: 300px;
+    height: 15px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: rgb(180,180,170,1);
+    color: rgba(25,25,25,1);
+    font-size: 15px;
+    letter-spacing: 5px;
+    padding: 0 10px 0 0;
+
+}
+
+
+#buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 50px);
+    grid-template-rows: repeat(5, 50px);
+
+    column-gap: 40px;
+    row-gap: 40px;
+
+    
+}
+
+button {
+
+    width: 70px;
+    height: 70px;
+    border: 2px solid rgba(95,95,95,1);
+    border-radius: 50%;
+    box-shadow: 0 3px 0 rgba(140,140,140,1);
+    font-size: 27px;
+
+}
+
+.number {
+    color: rgba(50,50,50,1);
+}
+.memory {
+    background-color: rgba(60,100,75,1);
+    color: white;
+}
+
+.operator {
+    background-color: rgba(120,75,50,1);
+    color: white;
+}
+
+#equal {
+    background-color: rgba(225,175,70,1);
+    color: white;
+}
