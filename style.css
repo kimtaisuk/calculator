@@ -37,7 +37,7 @@
 
 #display-border-inner{
     width: 400px;
-    height: 90px;
+    height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -47,7 +47,7 @@
 }
 #main-display {
     width: 350px;
-    height: 70px;
+    height: 90px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -62,29 +62,31 @@
 
 #number-display {
     width: 300px;
-    height: 35px;
+    height: 40px;
     justify-content: flex-end;
-    align-items: center;
+    align-content: right;
+    text-align: right;
     background-color: rgb(180,180,170,1);
     color: rgba(25,25,25,1);
-    font-size: 45px;
+    font-size: 35px;
     letter-spacing: 5px;
     padding: 0 10px 0 0;
 
 }
+
 #operation-display {
     width: 300px;
-    height: 15px;
-    display: flex;
+    height: 40px;
     justify-content: flex-end;
-    align-items: center;
+    text-align: right;
     background-color: rgb(180,180,170,1);
     color: rgba(25,25,25,1);
-    font-size: 15px;
+    font-size: 25px;
     letter-spacing: 5px;
     padding: 0 10px 0 0;
 
 }
+
 
 
 #buttons {

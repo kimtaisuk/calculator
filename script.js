@@ -82,18 +82,17 @@ numberButtons.forEach(numberButton => numberButton.addEventListener("click", () 
 }));
 
 document.addEventListener("keydown", (event) => {
-    event.preventDefault();
+    
     if (isNaN(event.key)) {
         if (event.key !== ".") {
             return;
         }
     }
+    event.preventDefault();
     document.getElementById(event.key).click();
 });
 
 document.addEventListener("keydown", (event) => {
-    event.preventDefault();
-    console.log(event.key);
     if (event.key === "Enter") {
         document.getElementById("equal").click();
     }
@@ -116,7 +115,7 @@ operatorButtons.forEach(operatorButton => operatorButton.addEventListener("click
 document.addEventListener("keydown", event => {
     let operatorArray = ["+", "-", "*", "/", "^"];
     if (operatorArray.includes(event.key)) {
-        console.log(event.key)
+        
         clickOperatorByKeyboard(event.key);
         updateDisplayNumber();
     }
@@ -260,93 +259,73 @@ function compute() {
 function updateDisplayNumber() {
     //displayNumber = parseFloat(currentNumber).toString();
 
-    formatNumber();
-    numberDisplay.innerText = displayNumber;
-    operationDisplay.innerHTML = previousNumber + " " + operatorDisplayed;
+    //displayNumber = formatNumber(displayNumber);
+    numberDisplay.innerText = formatNumber(displayNumber);
+    operationDisplay.innerHTML = "";
+    if (operatorDisplayed != "") {
+        operationDisplay.innerHTML = formatNumber(previousNumber) + " " + operatorDisplayed;
+    }
+    
 }
 
-function formatNumber() {
-    let numberArray;
-    if (displayNumber.includes(".")) {
-        let integer = "";
-        let decimal = "";
-
-        numberArray = displayNumber.split(".");
-        integer = numberArray[0];
-        decimal = numberArray[1];
-
-        let integerFloat = parseFloat(integer);
-
-        if (integer === '') {
-            integer = '0';
-        }
-        else if (Number.isInteger(integerFloat)) {
-            integer = integerFloat.toLocaleString("en-US");
-        }
-
-        else {
-            displayNumber = integer + "." + decimal;
-        }
+function formatNumber(number) {
+    if (number == "") {
+        return number = "";
     }
-    /*
-    let numberArray;
-    let displayFloat = Math.abs(parseFloat(displayNumber));
+
+    let numberArray, integerLength, decimalLength;
+    let integer = "";
+    let decimal = "";
+
+    number = number.toString();
+    let numberTotalLength = number.replace(".","").replace("-","").length;
+   
 
 
     
-    if (displayNumber === "") {
-        return;
+    if (numberTotalLength > 10 || number.includes("e")) {
+        
+        number = parseFloat(number).toExponential();
+        if (number.replace("-","").replace(".","").length > 10) {
+            let expForm = number.split("e");
+            let baseNum = expForm[0];
+            let expNum = expForm[1];
+            let precisionLength = 9-expNum.length; 
+            let precisionPower = Math.pow(10,precisionLength)
+            
+            baseNum = Math.round(parseFloat(baseNum) * precisionPower) / precisionPower;
+            
+            //baseNum = parseFloat(baseNum).toFixed(precisionLength);
+            number = baseNum + "e" + expNum;
+        } 
     }
-    if (displayFloat > 1e100) {
-        displayNumber = displayFloat.toExponential(3).toString();
-    }
-    else if (displayFloat >= 1e9) {
-        displayNumber = displayFloat.toExponential(4).toString();
-    } 
-    else if (displayFloat < 1e-9 && displayFloat > 0) { 
-        displayNumber = displayFloat.toExponential(4).toString();
-    } 
-    else if (displayNumber.includes(".")) {
-        let integer ="";
-        let decimal ="";
-
-        numberArray = displayNumber.split(".");
-        integer = numberArray[0];
-        decimal = numberArray[1];
-
-        let integerFloat = parseFloat(integer);
-
-        console.log(decimal);
-        let integerLength = integer.replace('-','').length;
-        let decimalLength = decimal.length;
-        console.log(decimalLength);
-        if (integer==='') {
-            integer= '0';
-        }
-        else if (Number.isInteger(integerFloat)) {
-            integer = integerFloat.toLocaleString("en-US");
-        }
-
-        if (integerLength + decimalLength > 9) {
-            displayFloat = Math.round(displayFloat * Math.pow(10,9-integerLength))/Math.pow(10,9-integerLength);
-            console.log(displayFloat);
-            if (displayFloat >= 1e9) {
-                displayNumber = displayFloat.toExponential(4).toString();
+    else if (number.includes(".")){
+         
+            numberArray = number.split(".");
+            integer = numberArray[0];
+            decimal = numberArray[1];        
+            integerLength = integer.replace('-','').length;
+            decimalLength = decimal.length;
+    
+            let integerFloat = parseFloat(integer);
+    
+            if (integer === '') {
+                integer = '0';
             }
             else {
-                displayNumber = displayFloat.toLocaleString("en-US");
+                integer = integerFloat.toLocaleString("en-US");
             }
 
-        }
-        else {
-            displayNumber = integer + "." + decimal;
-        }
- 
 
+            number = integer + "." + decimal;
+        
     }
+
     else {
-        displayNumber = parseFloat(displayNumber).toLocaleString("en-US");;
-    }*/
+        number = parseFloat(number).toLocaleString("en-US");
+    }
+
+    return number;
 
 }
 
@@ -378,7 +357,7 @@ function clearNumber() {
 }
 
 function deleteNumber() {
-    if (currentNumber === "") {
+    if (currentNumber === "" || formatNumber(currentNumber).includes("e")) {
         return;
     }
     currentNumber = currentNumber.substring(0, currentNumber.length - 1);
@@ -402,17 +381,8 @@ function clickEqual() {
         previousNumber = currentNumber;
     }
 
-    currentNumber = "";
     displayNumber = currentNumber;
-
-
-    /*if (isNaN(parseFloat(computedNumber))) {
-        displayNumber = previousNumber;
-    }  
-    else
-    {
-        displayNumber = computedNumber;        
-    }*/
+    
 }
 
 function memoryClear() {
@@ -427,21 +397,27 @@ function memoryRecall() {
 }
 
 function memoryPlus() {
+    if (currentNumber == "") {
+        return;
+    }
     if (memoryNumber === "") {
         memoryNumber = "0";
     }
-    let memNumb = parseInt(memoryNumber);
-    let currN = parseInt(currentNumber);
+    let memNumb = parseFloat(memoryNumber);
+    let currN = parseFloat(currentNumber);
     memNumb = memNumb + currN;
     memoryNumber = memNumb.toString();
 }
 
 function memoryMinus() {
+    if (currentNumber == "") {
+        return;
+    }
     if (memoryNumber === "") {
         memoryNumber = "0";
     }
-    let memNumb = parseInt(memoryNumber);
-    let currN = parseInt(currentNumber);
+    let memNumb = parseFloat(memoryNumber);
+    let currN = parseFloat(currentNumber);
     memNumb = memNumb - currN;
     memoryNumber = memNumb.toString();
 }
