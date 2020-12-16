@@ -29,56 +29,66 @@ let memoryMinusButton = document.querySelector("[data-memory='M-']")
 deleteButton.addEventListener("click", () => {
     deleteNumber();
     updateDisplayNumber();
+    deleteButton.classList.add('button-clicked');
 }
 );
 
 equalButton.addEventListener("click", () => {
     clickEqual();
     updateDisplayNumber();
+    equalButton.classList.add('button-clicked');
 }
 );
 
 clearButton.addEventListener("click", () => {
     clearNumber();
     updateDisplayNumber();
+    clearButton.classList.add('button-clicked');
 }
 );
 
 signButton.addEventListener("click", () => {
     switchSign();
     updateDisplayNumber();
+    signButton.classList.add('button-clicked');
 }
 );
 percentButton.addEventListener("click", () => {
     getPercentage();
     updateDisplayNumber();
+    percentButton.classList.add('button-clicked');
 }
 );
 
 memoryClearButton.addEventListener("click", () => {
     memoryClear();
+    memoryClearButton.classList.add('button-clicked');
 }
 );
 
 memoryPlusButton.addEventListener("click", () => {
     memoryPlus();
+    memoryPlusButton.classList.add('button-clicked');
 }
 );
 
 memoryMinusButton.addEventListener("click", () => {
     memoryMinus();
+    memoryMinusButton.classList.add('button-clicked');
 }
 );
 
 memoryRecallButton.addEventListener("click", () => {
     memoryRecall();
     updateDisplayNumber();
+    memoryRecallButton.classList.add('button-clicked');
 }
 );
 
 numberButtons.forEach(numberButton => numberButton.addEventListener("click", () => {
     appendNumber(numberButton.dataset.number);
     updateDisplayNumber();
+    numberButton.classList.add('button-clicked');
 }));
 
 document.addEventListener("keydown", (event) => {
@@ -124,12 +134,16 @@ document.addEventListener("keydown", event => {
     // 
 });
 
-//document.addEventListener("keydown",clickButton)
-//numberButtons.addEventListener("click",clickButton);
 
 
-//numberButton.addEventListener("keydown",clickNumber);
+const buttonKeys = document.querySelectorAll(".button-key");
+buttonKeys.forEach(buttonKey => buttonKey.addEventListener('transitionend',removeTransition));
 
+function removeTransition(e) {
+    if (e.propertyName !== 'transform') {return;}
+    this.classList.remove('button-clicked');    
+
+}
 
 
 function appendNumber(number) {
